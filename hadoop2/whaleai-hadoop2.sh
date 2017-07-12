@@ -48,6 +48,9 @@ sudo mv  hadoop-$HADOOP_VERSION /opt/
 mkdir $HADOOP_HOME/whaleai
 #配置hadoop3的配置文件
 echo "export JAVA_HOME=$JAVA_HOME">>$HADOOP_HOME/etc/hadoop/hadoop-env.sh
+echo "export HADOOP_PID_DIR=$HADOOP_HOME/whaleai/pids">>$HADOOP_HOME/etc/hadoop/hadoop-env.sh
+echo "export YARN_PID_DIR=$HADOOP_HOME/whaleai/pids">>$HADOOP_HOME/etc/hadoop/yarn-env.sh
+echo "hadoop-$HADOOP_VERSION　>>pids文件夹配置完成"
 create_config --file core-site.xml
 put_config --file core-site.xml --property fs.defaultFS --value "hdfs://localhost:9000"
 put_config --file core-site.xml --property hadoop.tmp.dir --value "$HADOOP_HOME/whaleai"
@@ -68,7 +71,7 @@ sudo mv  core-site.xml hdfs-site.xml mapred-site.xml yarn-site.xml -t $HADOOP_HO
 source /etc/profile
 echo "hadoop-$HADOOP_VERSION　>>变量配置完成 "
 $HADOOP_HOME/bin/hdfs namenode -format
-echoecho "hadoop-$HADOOP_VERSION >>format完成 "
+echo "hadoop-$HADOOP_VERSION >>format完成 "
 echo "hadoop-$HADOOP_VERSION　>>服务启动中..."
 $HADOOP_HOME/sbin/start-dfs.sh
 $HADOOP_HOME/sbin/start-yarn.sh
